@@ -1,51 +1,96 @@
-const bookmarks [];
-//building each page of web app
-function generateHomePage() {
-  return `
-      <div class="heading">
-      <h1>Bookmarks</h1>
-      </div>
-      <div class="main-container">               <!--form will add the bookmark and description to the list-->
-            <form action="ToDo">
-              <input
-                type="url"
-                id="url"
-                name="url"
-                placeholder="http://example.com"
-              />
-              <label for="descr"></label>
-              <input
-                type="text"
-                id="descr"
-                name="descr"
-                placeholder="Give a short description here!"
-              />
-              <input type="submit" value="Add" class="button" />
-                   <select id = "myList">
-                     <option class="label">Rating</option>
-                     <option value = "1">&#10084;</option>
-                     <option value = "2">&#10084;&#10084;</option>
-                     <option value = "3">&#10084;&#10084;&#10084;</option>
-                     <option value = "4">&#10084;&#10084;&#10084;&#10084;</option>
-                     <option value = "5">&#10084;&#10084;&#10084;&#10084;&#10084;</option>
-                    </select>
-            </form>
-          </div>
-        </div>
-      </section>`
+const BASE_URL = 'https://thinkful-list-api.herokuapp.com/cam';
+
+function listApiFetch(...args) {
+  let error;
+  return fetch(...args)
+    .then(res => {
+      console.log(res);
+      if (!res.ok) {
+        // Valid HTTP response but non-2xx status - let's create an error!
+        error = { code: res.status };
+      }
+      // In either case, parse the JSON stream:
+      return res.json();
+    })
+
+    .then(data => {
+      // If error was flagged, reject the Promise with the error object
+      if (error) {
+        error.message = data.message;
+        return Promise.reject(error);
+      }
+
+      // Otherwise give back the data as resolved Promise
+      return data;
+    });
 }
 
-//rendering each page to the main element in css
-
-function renderHomePage() {
-  const homepage = generateHomePage();
-  $("main").html(homepage);
+function getBookmarks() {
+  return listApiFetch(`${BASE_URL}/bookmarks`);
 }
 
-//call functions
 
-renderHomePage();
+  
+@param {string} title 
+@param {string} url 
+@param {string} desc 
+@param {number} rating 
+ 
+function createBookmark(title, url, desc = '', rating) {
+  let newBookmark = {
+    title: title,
+    url: url,
+    desc: desc,
+    rating: rating
+  };
+  console.log(newBookmark);
+  console.log(typeof title);
+  console.log(`${BASE_URL}/bookmarks`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newBookmark)
+  });
+  return listApiFetch(`${BASE_URL}/bookmarks`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newBookmark)
+  });
+}
 
-//document initializer
+  @param {string} id 
+  @param {string} title 
+  @param {string} url 
+ @param {string} desc 
+  @param {number} rating 
+ 
+function updateBookmark(id, title, url, desc = '', rating) {
+  let updateBookmark = JSON.stringify({
+    id: id,
+    title: title,
+    url: url,
+    desc: desc,
+    rating: rating
+  });
+  return listApiFetch(`${BASE_URL}/bookmarks/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: updateBookmark
+  });
+}
 
-$(handleBookmarks)
+/**
+ * 
+ * @param {string} id 
+ */
+function deleteBookmark(id) {
+  return listApiFetch(`${BASE_URL}/bookmarks/${id}`, {
+    method: 'DELETE'
+  });
+}
+
+export default {
+  getBookmarks,
+  createBookmark,
+  updateBookmark,
+  deleteBookmark
+};

@@ -1,48 +1,37 @@
-/*const store = {
-  bookmarks: [
-    {
-      id: 'x56w',
-      title: 'Title 1',
-      rating: 3,
-      url: 'http://www.title1.com',
-      description: 'lorem ipsum dolor sit',
-      expanded: false
-    },
-    {
-      id: '6ffw',
-      title: 'Title 2',
-      rating: 5,
-      url: 'http://www.title2.com',
-      description: 'dolorum tempore deserunt',
-      expanded: false
-    } 
-    ...
-  ],
+const store = {
+  bookmarks: [],
   adding: false,
   error: null,
-  filter: 0
+  filter: 0,
+  minRating: 0,   
 };
 
-const store = {
-  bookmarks: [
-    {
-      id: '7ddr',
-      title: 'Title 11',
-      rating: 5,
-      url: 'http://www.title11.com',
-      description: 'lorem ipsum dolor',
-      expanded: true
-    }
-    ...
-  ],
-  adding: false,
-  error: null,
-  filter: 0
-};
+function findById(id) {
+  return this.STORE.bookmarks.find(currentItem => currentItem.id === id);
+}
 
-const store = {
-  bookmarks: [...],
-  adding: true,
-  error: null,
-  filter: 0
-};*/
+function addItem(item) {
+  this.STORE.bookmarks.push(item);
+}
+
+function findAndUpdate(id,newData) {
+  let foundItem = this.findById(id);
+  Object.assign(foundItem, newData);
+}
+
+function findAndDelete(id) {
+  this.STORE.bookmarks = this.STORE.bookmarks.filter(currentItem => currentItem.id !== id);
+}
+
+function changeFilter(newMin) {
+  this.STORE.minRating = newMin;
+}
+
+export default {
+  STORE,
+  findById,
+  addItem,
+  findAndDelete,
+  findAndUpdate,
+  changeFilter
+};

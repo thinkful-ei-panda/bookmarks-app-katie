@@ -9,16 +9,52 @@
       type="text/css"
     />
     <link href="style.css" rel="stylesheet" type="text/css" />
-    <title>Document</title>
+    <title>Bookmarks App</title>
   </head>
-  <body>
-    <header></header>
-    <main></main>
-    <footer></footer>
+  <main>
+    <section>
+      <div class="heading"><h1>Bookmarks</h1></div>
+      <div class="main-container">             
+        <form>
+            <input
+              type="url"
+              id="url"
+              name="url"
+              placeholder="http://example.com"
+            />
+            <label for="descr"></label>
+            <input
+              type="text"
+              id="descr"
+              name="descr"
+              placeholder="Give a short description here!"
+            />
+                 <select id = "myList">
+                   <option class="label">Rating</option>
+                   <option value = "1">&#10084;</option>
+                   <option value = "2">&#10084;&#10084;</option>
+                   <option value = "3">&#10084;&#10084;&#10084;</option>
+                   <option value = "4">&#10084;&#10084;&#10084;&#10084;</option>
+                   <option value = "5">&#10084;&#10084;&#10084;&#10084;&#10084;</option>
+                  </select>
+                  <input type="submit" value="Add" class="button" />
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div class="footer">
+    <footer>
+      <span class="copyright">Katie 2020 &copy;</span>
+    </footer>
+  </div>
+</body>
+</html>
+
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.js"
       crossorigin="anonymous"
     ></script>
-    <script src="app.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>

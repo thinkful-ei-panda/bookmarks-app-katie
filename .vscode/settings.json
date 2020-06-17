@@ -7,5 +7,6 @@
     "latex",
     "plaintext",
     "html"
-  ]
+  ],
+  "eslint.enable": false
 }
