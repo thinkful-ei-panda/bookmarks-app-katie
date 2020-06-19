@@ -1,4 +1,4 @@
-const BASE_URL = 'https://thinkful-list-api.herokuapp.com/cam';
+const BASE_URL = 'https://thinkful-list-api.herokuapp.com/katie';
 
 function listApiFetch(...args) {
   let error;
@@ -6,21 +6,21 @@ function listApiFetch(...args) {
     .then(res => {
       console.log(res);
       if (!res.ok) {
-        // Valid HTTP response but non-2xx status - let's create an error!
+        
         error = { code: res.status };
       }
-      // In either case, parse the JSON stream:
+      
       return res.json();
     })
 
     .then(data => {
-      // If error was flagged, reject the Promise with the error object
+      
       if (error) {
         error.message = data.message;
         return Promise.reject(error);
       }
 
-      // Otherwise give back the data as resolved Promise
+      
       return data;
     });
 }
@@ -30,12 +30,12 @@ function getBookmarks() {
 }
 
 
-  
-@param {string} title 
-@param {string} url 
-@param {string} desc 
-@param {number} rating 
- 
+ /** 
+*@param {string} title 
+*@param {string} url 
+*@param {string} desc 
+*@param {number} rating 
+ */
 function createBookmark(title, url, desc = '', rating) {
   let newBookmark = {
     title: title,
@@ -56,13 +56,13 @@ function createBookmark(title, url, desc = '', rating) {
     body: JSON.stringify(newBookmark)
   });
 }
-
+/** 
   @param {string} id 
   @param {string} title 
   @param {string} url 
  @param {string} desc 
   @param {number} rating 
- 
+ */
 function updateBookmark(id, title, url, desc = '', rating) {
   let updateBookmark = JSON.stringify({
     id: id,
