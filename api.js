@@ -1,96 +1,79 @@
-const BASE_URL = 'https://thinkful-list-api.herokuapp.com/katie';
 
-function listApiFetch(...args) {
+import store from './store.js';
+import bookmarks from '.bookmarks.js';
+
+const BASE_URL = 'https://thinkful-list-api.herokuapp.com/katie/bookmarks';
+
+function listApifecth(..args) {
   let error;
-  return fetch(...args)
-    .then(res => {
-      console.log(res);
-      if (!res.ok) {
-        
-        error = { code: res.status };
-      }
-      
-      return res.json();
-    })
 
-    .then(data => {
-      
-      if (error) {
-        error.message = data.message;
+  return fetch(...args)
+
+  .then((response) => {
+    if (!response.ok) {
+      error = { code: response.status };
+      tore.setError(error);
+      bookmarks.renderError();
+
+      if (!response.headers.get('content-type').includes('json')) {
+        error.message = response.statusText;
+        store.setError(error);
+        bookmarks.renderError();
+
         return Promise.reject(error);
       }
+    }
+    return response.json();
+  })
 
-      
-      return data;
-    });
+  .then((data) => {
+    if (error) {
+      error.message = data.message;
+      store.setError(error);
+      bookmarks.renderError();
+
+      return Promise.reject(error);
+    }
+    return data;
+  });
 }
 
 function getBookmarks() {
-  return listApiFetch(`${BASE_URL}/bookmarks`);
+  return listApiFetch(`${BASE_URL}`);
 }
 
-
- /** 
-*@param {string} title 
-*@param {string} url 
-*@param {string} desc 
-*@param {number} rating 
- */
-function createBookmark(title, url, desc = '', rating) {
-  let newBookmark = {
-    title: title,
-    url: url,
-    desc: desc,
-    rating: rating
-  };
-  console.log(newBookmark);
-  console.log(typeof title);
-  console.log(`${BASE_URL}/bookmarks`, {
+function createBookmark(myBookData) {
+  return listApiFetch(`${BASE_URL}`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(newBookmark)
-  });
-  return listApiFetch(`${BASE_URL}/bookmarks`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(newBookmark)
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: myBookData
   });
 }
-/** 
-  @param {string} id 
-  @param {string} title 
-  @param {string} url 
- @param {string} desc 
-  @param {number} rating 
- */
-function updateBookmark(id, title, url, desc = '', rating) {
-  let updateBookmark = JSON.stringify({
-    id: id,
-    title: title,
-    url: url,
-    desc: desc,
-    rating: rating
+
+function deleteBookmark(bookId) {
+  return listApifecth(`${BASE_URL}/${bookId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
   });
-  return listApiFetch(`${BASE_URL}/bookmarks/${id}`, {
+}
+
+function updateBookmark(bookId, newBookData) {
+  return listApifecth(`${BASE_URL}/${bookId}`, {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: updateBookmark
-  });
-}
-
-/**
- * 
- * @param {string} id 
- */
-function deleteBookmark(id) {
-  return listApiFetch(`${BASE_URL}/bookmarks/${id}`, {
-    method: 'DELETE'
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: newBookData
   });
 }
 
 export default {
   getBookmarks,
   createBookmark,
-  updateBookmark,
-  deleteBookmark
+  deleteBookmark,
+  updateBookmark
 };

@@ -1,21 +1,19 @@
+/* global $ */
+import api from './api.js';
+import bookmark from './bookmarks.js';
 import store from './store.js';
-import bookmarks from '/.bookmarks.js';
-import api from './api';
 
-const main = function () {
+function main() {
+
+
   api.getBookmarks()
-  .then((items) => {
-    console.log(items);
-    items.forEach((item) => store.addItem(item));
-    bookmarks.render();
-});
+    .then((items) => {
+      items.forEach((item) => store.addItem(item));
+      bookmark.render();
+      bookmark.renderError();
+    });
+  bookmark.render();
+  bookmark.renderError();
+}
 
-bookmarks.bindEventListeners();
-bookmarks.render();
-};
-
-$(main);
-
-
-
-
+$(main); 

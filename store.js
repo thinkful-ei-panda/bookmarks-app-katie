@@ -1,37 +1,59 @@
-const store = {
-  bookmarks: [],
-  adding: false,
-  error: null,
-  filter: 0,
-  minRating: 0,   
-};
+let bookmarks = [];
+let adding = false;
+let error = {};
+let filter = 0;
+let editing = false;
+
+
+function ratingFilter(filter) {
+  let filteredItems = this.bookmarks.filter(item => item.rating >= filter);
+  return filteredItems;
+}
+
+function expand(id) {
+  return this.bookmarks.find(item => item.id === id).expanded = true;
+}
+
+function collapse(id) {
+  return this.bookmarks.find(item => item.id === id).expanded = false;
+}
 
 function findById(id) {
-  return this.STORE.bookmarks.find(currentItem => currentItem.id === id);
-}
-
-function addItem(item) {
-  this.STORE.bookmarks.push(item);
-}
-
-function findAndUpdate(id,newData) {
-  let foundItem = this.findById(id);
-  Object.assign(foundItem, newData);
+  return this.bookmarks.find(currentItem => currentItem.id === id);
 }
 
 function findAndDelete(id) {
-  this.STORE.bookmarks = this.STORE.bookmarks.filter(currentItem => currentItem.id !== id);
+  return this.bookmarks = this.bookmarks.filter(currentItem => currentItem.id !== id);
 }
 
-function changeFilter(newMin) {
-  this.STORE.minRating = newMin;
+function findAndUpdate(id, newFormData) {
+  const currentItem = this.findById(id);
+  let obj = JSON.parse(newFormData);
+  Object.assign(currentItem, obj);
+}
+
+function addItem(newItem) {
+  !newItem.expanded;
+  !newItem.editing;
+  this.bookmarks.push(newItem);
+}
+
+function setError(error) {
+  this.error = error;
 }
 
 export default {
-  STORE,
+  bookmarks,
+  adding,
+  editing,
+  error,
+  filter,
   findById,
-  addItem,
   findAndDelete,
   findAndUpdate,
-  changeFilter
+  addItem,
+  setError,
+  expand,
+  collapse,
+  ratingFilter
 };
