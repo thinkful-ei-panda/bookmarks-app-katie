@@ -3,6 +3,7 @@
 
 import store from './store.js';
 import api from './api.js';
+import './app.css';
 
 
 
@@ -72,11 +73,11 @@ function generateAddBookmarkView() {
       <label for="new-bookmark-title">Website Name</label>
         <input type="text" id="new-bookmark-title" class="new-bookmark" name="title" placeholder="Site Name" required>
         <select name="rating" class="rating-select">
-        <option value="1">⭐+</option>
-        <option value="2">⭐⭐+</option>
-        <option value="3">⭐⭐⭐+</option>
-        <option value="4">⭐⭐⭐⭐+</option>
-        <option value="5">⭐⭐⭐⭐⭐</option>
+        <option value="1">&hearts;+</option>
+        <option value="2">&hearts;&hearts;+</option>
+        <option value="3">&hearts;&hearts;&hearts;+</option>
+        <option value="4">&hearts;&hearts;&hearts;&hearts;+</option>
+        <option value="5">&hearts;&hearts;&hearts;&hearts;&hearts;</option>
     </div>
         </select>
       <div class="description-container">
@@ -173,11 +174,11 @@ function generateEditView(id) {
       <label for="new-bookmark-title">Website Name</label>
         <input type="text" id="new-bookmark-title" class="edit-bookmark" name="title" value="${item.title}" required>
       <select name="rating" class="rating-select">
-        <option value="1">⭐+</option>
-        <option value="2">⭐⭐+</option>
-        <option value="3">⭐⭐⭐+</option>
-        <option value="4">⭐⭐⭐⭐+</option>
-        <option value="5">⭐⭐⭐⭐⭐</option>
+        <option value="1">&hearts;+</option>
+        <option value="2">&hearts;&hearts;+</option>
+        <option value="3">&hearts;&hearts;&hearts;+</option>
+        <option value="4">&hearts;&hearts;&hearts;&hearts;+</option>
+        <option value="5">&hearts;&hearts;&hearts;&hearts;&hearts;</option>
   </div>
       </select>
       <div class="description-container">
@@ -264,12 +265,12 @@ function generateInitialView() {
       <div class="title-button-container">
         <button class="new-bookmark-button" id="new-bookmark">New Bookmark 📘</button>
         <select name="filter-bookmark" class="filter-select">
-        <option value="0">Filtered By 🚩</option>
-        <option value="1">⭐+</option>
-        <option value="2">⭐⭐+</option>
-        <option value="3">⭐⭐⭐+</option>
-        <option value="4">⭐⭐⭐⭐+</option>
-        <option value="5">⭐⭐⭐⭐⭐</option>
+        <option value="0">Filtered By &hearts;</option>
+        <option value="1">&hearts;+</option>
+        <option value="2"&hearts;&hearts; +</option>
+        <option value="3">&hearts;&hearts;&hearts;+</option>
+        <option value="4">&hearts;&hearts;&hearts;&hearts;+</option>
+        <option value="5">&hearts;&hearts;&hearts;&hearts;&hearts;</option>
       </select>
   </div>`;
 }

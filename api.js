@@ -4,7 +4,7 @@ import bookmarks from '.bookmarks.js';
 
 const BASE_URL = 'https://thinkful-list-api.herokuapp.com/katie/bookmarks';
 
-function listApifecth(..args) {
+function listApifecth(...args) {
   let error;
 
   return fetch(...args)
