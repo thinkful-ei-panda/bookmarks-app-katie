@@ -1,66 +1,51 @@
 /* eslint-disable quotes */
-/* global $ */
-
-import store from './store.js';
-import api from './api.js';
-import './app.css';
-
-
-
+import store from "./store.js";
+import api from "./api.js";
 
 function render(id, expand) {
   renderError();
 
   if (store.adding) {
-    $('main').html(generateAddBookmarkView());
-    let view = 'adding';
+    $("main").html(generateAddBookmarkView());
+    let view = "adding";
     generateCodeBlock(view);
-  }
-
-  else if (store.filter !== 0 && !id) {
-    let html = [generateInitialView(), generateFilteredResults(store.filter)].join('');
-    $('main').html(html);
-    let view = 'filter';
+  } else if (store.filter !== 0 && !id) {
+    let html = [
+      generateInitialView(),
+      generateFilteredResults(store.filter),
+    ].join("");
+    $("main").html(html);
+    let view = "filter";
     generateCodeBlock(view);
-  }
-
-  else if (store.editing) {
+  } else if (store.editing) {
     let html = generateEditView(id);
-    $('main').html(html);
-    let view = 'editing';
+    $("main").html(html);
+    let view = "editing";
     generateCodeBlock(view);
-  }
-
-  else if (expand !== undefined) {
+  } else if (expand !== undefined) {
     let html = generateExpandedView(id, expand);
     $(expand).html(html);
-    let view = 'expanded';
+    let view = "expanded";
     generateCodeBlock(view);
-  }
-
-  else {
-    let html = [generateInitialView(), generateItem()].join('');
-    $('main').html(html);
-    let view = 'initial';
+  } else {
+    let html = [generateInitialView(), generateItem()].join("");
+    $("main").html(html);
+    let view = "initial";
     generateCodeBlock(view);
   }
 }
 
 function renderError() {
   if (store.error.code) {
-    $('div.error-container').html(`${store.error.message}`);
-    let view = 'error';
+    $("div.error-container").html(`${store.error.message}`);
+    let view = "error";
     generateCodeBlock(view);
-  }
-  else {
-    $('div.error-container').empty();
+  } else {
+    $("div.error-container").empty();
   }
 }
 
-
-
 function generateAddBookmarkView() {
-
   return `<div class="error-container"></div>
     <div class="title-container">
       <h1>My Bookmarks</h1>
@@ -72,6 +57,9 @@ function generateAddBookmarkView() {
         required>
       <label for="new-bookmark-title">Website Name</label>
         <input type="text" id="new-bookmark-title" class="new-bookmark" name="title" placeholder="Site Name" required>
+        <div class="description-container">
+        <input type="text" id="new-bookmark-description" class="new-bookmark" name="desc" placeholder="Brief website description (optional)">
+      </div>  
         <select name="rating" class="rating-select">
         <option value="1">&hearts;+</option>
         <option value="2">&hearts;&hearts;+</option>
@@ -80,11 +68,8 @@ function generateAddBookmarkView() {
         <option value="5">&hearts;&hearts;&hearts;&hearts;&hearts;</option>
     </div>
         </select>
-      <div class="description-container">
-        <input type="text" id="new-bookmark-description" class="new-bookmark" name="desc" placeholder="Brief website description (optional)">
-      </div>  
-        <button type="submit" id="add-new-bookmark">Add Book</button>
-      <button id="cancel-new-bookmark" type="reset">Cancel</button>
+        <button class="pure-button" type="submit" id="add-new-bookmark">Add Bookmark</button>
+      <button class="pure-button" id="cancel-new-bookmark" type="reset">Cancel</button>
       </form>`;
 }
 
@@ -97,11 +82,11 @@ function generateItem() {
       <div class="star-rating">
       <form id="${itemArr[i].id}">
       ${generateRatings(itemArr[i].id)}
-      </form><button class="delete-bookmark-button">Delete</button></div>
+      </form><button class="delete-bookmark-button" class="pure-button">Delete</button></div>
       </li>`);
   }
-  htmlArr.push('</ul>');
-  return htmlArr.join(' ');
+  htmlArr.push("</ul>");
+  return htmlArr.join(" ");
 }
 
 function generateFilteredResults(filter) {
@@ -116,7 +101,7 @@ function generateFilteredResults(filter) {
     </li>`);
   }
   htmlArr.push("</ul>");
-  return htmlArr.join('');
+  return htmlArr.join("");
 }
 
 function generateExpandedView(id, expand) {
@@ -124,14 +109,12 @@ function generateExpandedView(id, expand) {
 
   if (item.expanded === true) {
     store.collapse(id);
-    $(expand).find('.expanded-bookmark-data').remove();
+    $(expand).find(".expanded-bookmark-data").remove();
     return `${item.title} 
       <div class="star-rating"><form id="${item.id}">
       ${generateRatings(id)}
       </form><button class="delete-bookmark-button">Delete</button></div>`;
-  }
-
-  else {
+  } else {
     store.expand(id);
 
     return `<li class="expanded-bookmark-data"  data-item-id="${item.id}">
@@ -154,10 +137,10 @@ function generateRatings(id) {
 
   for (let i = 0; i < 5; i++) {
     arr.push(`<input type="checkbox" name="rating" value="${i}"
-    ${rating > i ? 'checked' : ''}></input>`);
+    ${rating > i ? "checked" : ""}></input>`);
   }
 
-  return arr.join(' ');
+  return arr.join(" ");
 }
 
 function generateEditView(id) {
@@ -190,9 +173,8 @@ function generateEditView(id) {
 }
 
 function generateCodeBlock(view) {
-
-  if (view === 'initial') {
-    $('code').html(`inital store state
+  if (view === "initial") {
+    $("code").html(`inital store state
     let bookmarks = [];
     let adding = false;
     let error = {};
@@ -200,8 +182,8 @@ function generateCodeBlock(view) {
     let editing = false;`);
   }
 
-  if (view === 'expanded') {
-    $('code').html(`'expanded view store state'
+  if (view === "expanded") {
+    $("code").html(`'expanded view store state'
       const bookmarks = [
         {
           id: 'x56w',
@@ -218,8 +200,8 @@ function generateCodeBlock(view) {
       let editing = false;`);
   }
 
-  if (view === 'adding') {
-    $('code').html(`'add bookmark view store state'
+  if (view === "adding") {
+    $("code").html(`'add bookmark view store state'
       const bookmarks = [. . .];
       let adding = true;
       let error = null;
@@ -227,8 +209,8 @@ function generateCodeBlock(view) {
       let editing = false;`);
   }
 
-  if (view === 'editing') {
-    $('code').html(`'edit bookmark view store state'
+  if (view === "editing") {
+    $("code").html(`'edit bookmark view store state'
       const bookmarks = [. . .];
       let adding = false;
       let error = null;
@@ -236,8 +218,8 @@ function generateCodeBlock(view) {
       let editing = true;`);
   }
 
-  if (view === 'filter') {
-    $('code').html(`'filter bookmark view store state'
+  if (view === "filter") {
+    $("code").html(`'filter bookmark view store state'
       const bookmarks = [. . .];
       let adding = false;
       let error = null;
@@ -245,8 +227,8 @@ function generateCodeBlock(view) {
       let editing = false;`);
   }
 
-  if (view === 'error') {
-    $('code').html(`'edit bookmark view store state'
+  if (view === "error") {
+    $("code").html(`'edit bookmark view store state'
       const bookmarks = [. . .];
       let adding = false;
       let error = ${store.error.message};
@@ -256,18 +238,17 @@ function generateCodeBlock(view) {
 }
 
 function generateInitialView() {
-
   return `
   <div class="error-container"></div>
   <div class="title-container">
     <h1>My Bookmarks</h1>
   </div>
       <div class="title-button-container">
-        <button class="new-bookmark-button" id="new-bookmark">New Bookmark 📘</button>
+        <button class="new-bookmark-button" id="new-bookmark">New Bookmark </button>
         <select name="filter-bookmark" class="filter-select">
         <option value="0">Filtered By &hearts;</option>
         <option value="1">&hearts;+</option>
-        <option value="2"&hearts;&hearts; +</option>
+        <option value="2"&hearts;&hearts;+</option>
         <option value="3">&hearts;&hearts;&hearts;+</option>
         <option value="4">&hearts;&hearts;&hearts;&hearts;+</option>
         <option value="5">&hearts;&hearts;&hearts;&hearts;&hearts;</option>
@@ -275,19 +256,16 @@ function generateInitialView() {
   </div>`;
 }
 
-
-
-
 function handleNewBookmark() {
-  $('main').on('click', '#new-bookmark', event => {
+  $("main").on("click", "#new-bookmark", (event) => {
     store.adding = true;
     render();
   });
 }
 
 function handleFilterSelect() {
-  $('main').on('change', '.filter-select', event => {
-    store.filter = $('.filter-select').val();
+  $("main").on("change", ".filter-select", (event) => {
+    store.filter = $(".filter-select").val();
     render();
   });
 }
@@ -295,29 +273,27 @@ function handleFilterSelect() {
 function serializeJson(form) {
   const formData = new FormData(form);
   const obj = {};
-  formData.forEach((val, name) => obj[name] = val);
+  formData.forEach((val, name) => (obj[name] = val));
   return JSON.stringify(obj);
 }
 
 function handleCreateBook() {
-  $('main').on('submit', '#new-bookmark-form', event => {
+  $("main").on("submit", "#new-bookmark-form", (event) => {
     event.preventDefault();
 
     let formElement = document.querySelector("#new-bookmark-form");
     const myFormData = serializeJson(formElement);
 
-    api.createBookmark(myFormData)
-      .then((newItem) => {
-        store.addItem(newItem);
-        render();
-      });
+    api.createBookmark(myFormData).then((newItem) => {
+      store.addItem(newItem);
+      render();
+    });
     store.adding = false;
   });
 }
 
-
 function handleCancelCreate() {
-  $('main').on('click', '#cancel-new-bookmark', event => {
+  $("main").on("click", "#cancel-new-bookmark", (event) => {
     event.preventDefault();
     store.adding = false;
     render();
@@ -325,20 +301,19 @@ function handleCancelCreate() {
 }
 
 function handleDeleteBook() {
-  $('main').on('click', '.delete-bookmark-button', event => {
+  $("main").on("click", ".delete-bookmark-button", (event) => {
     event.preventDefault();
 
     const id = getBookId(event.currentTarget);
-    api.deleteBookmark(id)
-      .then(() => {
-        store.findAndDelete(id);
-        render();
-      });
+    api.deleteBookmark(id).then(() => {
+      store.findAndDelete(id);
+      render();
+    });
   });
 }
 
 function handleEditButton() {
-  $('main').on('click', '#edit-bookmark', event => {
+  $("main").on("click", "#edit-bookmark", (event) => {
     event.preventDefault();
 
     const id = getBookId(event.currentTarget);
@@ -349,7 +324,7 @@ function handleEditButton() {
 }
 
 function handleCancelEdit() {
-  $('main').on('click', '#cancel-edit', event => {
+  $("main").on("click", "#cancel-edit", (event) => {
     event.preventDefault();
 
     store.editing = false;
@@ -358,7 +333,7 @@ function handleCancelEdit() {
 }
 
 function handleClickLink() {
-  $('main').on('click', '.link', event => {
+  $("main").on("click", ".link", (event) => {
     event.preventDefault();
 
     let link = $(event.currentTarget);
@@ -367,24 +342,23 @@ function handleClickLink() {
 }
 
 function handleSubmitEdit() {
-  $('main').on('submit', '.edit-bookmark-form', event => {
+  $("main").on("submit", ".edit-bookmark-form", (event) => {
     event.preventDefault();
 
-    const id = $(event.currentTarget).data('item-id');
+    const id = $(event.currentTarget).data("item-id");
     let formElement = document.querySelector(".edit-bookmark-form");
     const newFormData = serializeJson(formElement);
 
-    api.updateBookmark(id, newFormData)
-      .then(() => {
-        store.findAndUpdate(id, newFormData);
-        render();
-      });
+    api.updateBookmark(id, newFormData).then(() => {
+      store.findAndUpdate(id, newFormData);
+      render();
+    });
     store.editing = false;
   });
 }
 
 function handleExpandView() {
-  $('main').on('click', '.bookmark-data', event => {
+  $("main").on("click", ".bookmark-data", (event) => {
     event.preventDefault();
 
     const id = getBookId(event.currentTarget);
@@ -394,11 +368,8 @@ function handleExpandView() {
 }
 
 function getBookId(item) {
-  return $(item)
-    .closest('.bookmark-data')
-    .data('item-id');
+  return $(item).closest(".bookmark-data").data("item-id");
 }
-
 
 function bindEventListeners() {
   handleCancelCreate();
@@ -416,9 +387,8 @@ function bindEventListeners() {
 
 $(bindEventListeners);
 
-
 export default {
   render,
   renderError,
-  bindEventListeners
+  bindEventListeners,
 };

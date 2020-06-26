@@ -1,12 +1,17 @@
 * {
   box-sizing: border-box;
+  list-style-type: none;
 }
 
-/* .heading {
+body {
+  background-color: ;
+}
+
+h1 {
   text-align: center;
 }
 
-form {
+form, .bookmark-list, .title-button-container{
   display: flex;
   flex-direction: column;
   width: 350px;
@@ -15,27 +20,27 @@ form {
   padding-top: 10px;
 }
 
-.form-container {
-  background-color: cornsilk;
+.bookmark-data {
+  display: flex;
+  width: 350px;
+  align-items: center;
+  margin: auto;
+  padding-top: 10px;
 }
 
 input {
   width: 200px;
 }
 
-.button {
-  color: black;
-  background-color: #dfd9d2;
+
+button {
+margin-top: 1rem;
 }
 
-option {
-  background-color: #dfd9d2;
-  color: #3a4a4d;
-}
+
 
 .main-container {
   background-color: burlywood;
-  background-image: url(https://image.freepik.com/free-vector/bright-background-with-dots_1055-3132.jpg);
   width: 500px;
   height: 700px;
   display: flex;
@@ -44,6 +49,6 @@ option {
   border-radius: 10%;
 }
 
-.footer {
-  text-align: ;
-} */
+footer {
+  text-align: center;
+}
