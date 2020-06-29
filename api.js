@@ -1,25 +1,12 @@
 import store from "./store.js";
 import bookmarks from "./bookmarks.js";
 
-const baseURL = "https://thinkful-list-api.herokuapp.com/katie/bookmarks";
-
+const baseURL = "https://www.googleapis.com/books/v1"
 async function listApiFetch(...args) {
   let error;
 
   const response = await fetch(...args);
-  // if (!response.ok) {
-  //   error = { code: response.status };
-  //   store.setError(error);
-  //   bookmarks.renderError();
-
-  //   if (!response.headers.get("content-type").includes("json")) {
-  //     error.message = response.statusText;
-  //     store.setError(error);
-  //     bookmarks.renderError();
-
-  //     return Promise.reject(error);
-  //   }
-  // }
+ 
   const data = await response.json();
   if (error) {
     error.message = data.message;

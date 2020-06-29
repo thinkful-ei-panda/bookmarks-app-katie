@@ -55,7 +55,7 @@ function generateAddBookmarkView() {
       <label for="new-bookmark-input">Website Address</label>
         <input type="url" id="new-bookmark-input" class="new-bookmark" name="url" placeholder="URL" 
         required>
-      <label for="new-bookmark-title">Website Name</label>
+      <label for="new-bookmark-title">Search</label>
         <input type="text" id="new-bookmark-title" class="new-bookmark" name="title" placeholder="Site Name" required>
         <div class="description-container">
         <input type="text" id="new-bookmark-description" class="new-bookmark" name="desc" placeholder="Brief website description (optional)">
