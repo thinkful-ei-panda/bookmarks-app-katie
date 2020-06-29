@@ -1,5 +1,13 @@
 # bookmarks-app-katie
 
+Live app:
+
+https://thinkful-ei-panda.github.io/bookmarks-app-katie/
+
+Overview:
+
+This is a dynamic bookmark app that can be used to store and update your favorite websites!!!
+
 As a user:
 
 I can add bookmarks to my bookmark list. Bookmarks contain:
