@@ -248,7 +248,7 @@ function generateInitialView() {
         <select name="filter-bookmark" class="filter-select">
         <option value="0">Filtered By &hearts;</option>
         <option value="1">&hearts;+</option>
-        <option value="2"&hearts;&hearts;+</option>
+        <option value="2">&hearts;&hearts;+</option>
         <option value="3">&hearts;&hearts;&hearts;+</option>
         <option value="4">&hearts;&hearts;&hearts;&hearts;+</option>
         <option value="5">&hearts;&hearts;&hearts;&hearts;&hearts;</option>
